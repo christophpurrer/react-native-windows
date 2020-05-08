@@ -28,17 +28,17 @@ AppTheme::AppTheme(
     const std::shared_ptr<IReactInstance> &reactInstance,
     const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
     : react::windows::AppTheme(), m_wkReactInstance(reactInstance), m_queueThread(defaultQueueThread) {
-  m_currentTheme = winrt::Application::Current().RequestedTheme();
+  m_currentTheme = winrt::ApplicationTheme::Dark;
   m_isHighContrast = m_accessibilitySettings.HighContrast();
   m_highContrastColors = getHighContrastColors();
 
-  m_highContrastChangedRevoker =
-      m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
-        folly::dynamic eventData = folly::dynamic::object("highContrastColors", getHighContrastColors())(
-            "isHighContrast", getIsHighContrast());
+  // m_highContrastChangedRevoker =
+  //     m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
+  //       folly::dynamic eventData = folly::dynamic::object("highContrastColors", getHighContrastColors())(
+  //           "isHighContrast", getIsHighContrast());
 
-        fireEvent("highContrastChanged", std::move(eventData));
-      });
+  //       fireEvent("highContrastChanged", std::move(eventData));
+  //     });
 
   m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
     m_queueThread->runOnQueue([this]() {

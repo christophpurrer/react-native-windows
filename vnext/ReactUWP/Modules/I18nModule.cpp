@@ -20,11 +20,12 @@ namespace uwp {
   if (langs.Size() > 0) {
     locale = Microsoft::Common::Unicode::Utf16ToUtf8(langs.GetAt(0));
 
-    auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
-                               .GetForCurrentView()
-                               .QualifierValues()
-                               .Lookup(L"LayoutDirection");
-    isRTL = layoutDirection != L"LTR";
+    // auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
+    //                            .GetForCurrentView()
+    //                            .QualifierValues()
+    //                            .Lookup(L"LayoutDirection");
+    // isRTL = layoutDirection != L"LTR";
+    isRTL = false;
   }
 
   return std::make_pair<std::string, bool>(std::move(locale), std::move(isRTL));
